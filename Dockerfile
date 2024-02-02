@@ -12,7 +12,10 @@ COPY docker-entrypoint.sh /
 
 RUN apk update && apk upgrade && \ 
    apk add --no-cache --update freeradius freeradius-utils freeradius-perl ca-certificates perl-json perl-libwww perl-lwp-protocol-https && \
-   chmod +x /docker-entrypoint.sh
+   chmod +x /docker-entrypoint.sh && \
+   apk add openssl make freeradius-eap && \
+   cd /etc/raddb/certs && \
+   make
 
 COPY freeradius-oauth2-perl /opt/freeradius-oauth2-perl
 COPY inner-tunnel default /etc/raddb/sites-available/
